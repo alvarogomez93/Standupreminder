@@ -1,0 +1,16 @@
+
+{
+  "manifest_version": 2,
+
+  "name": "Standing desk reminder",
+  "description": "A simple plugin to remind you switching between a standing/sit position with your standing desk for maximum ergonomics",
+  "version": "1.0",
+
+  "browser_action": {
+   "default_icon": "icon.png",
+   "default_popup": "popup.html"
+  },
+  "permissions": [
+   "activeTab"
+   ]
+}
