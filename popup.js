@@ -1,20 +1,32 @@
-document.addEventListener('DOMContentLoaded', function() {
-  var checkPageButton = document.getElementById('checkPage');
-  checkPageButton.addEventListener('click', function() {
+console.log("popup.js loaded")
 
-    chrome.tabs.getSelected(null, function(tab) {
-      d = document;
+// Call this when the pop-up is shown
 
-      var f = d.createElement('form');
-      f.action = 'http://gtmetrix.com/analyze.html?bm';
-      f.method = 'post';
-      var i = d.createElement('input');
-      i.type = 'hidden';
-      i.name = 'url';
-      i.value = tab.url;
-      f.appendChild(i);
-      d.body.appendChild(f);
-      f.submit();
-    });
-  }, false);
-}, false);
+function displayTimer(time) {
+  if (time.getTime() > Date.now()) {
+    setInterval(() => {
+      // display the remaining time stored in variable called time in testTimer id
+      document.getElementById('testTimer').innerHTML = time.toLocaleTimeString();
+    }, 1000)
+
+  }
+}
+
+
+
+chrome.runtime.sendMessage({ cmd: 'GET_TIME' }, response => {
+  if (response.time) {
+    const time = new Date(response.time);
+    displayTimer(time)
+  }
+  
+});
+
+
+
+
+
+
+function startTime(time) {
+  chrome.runtime.sendMessage({ cmd: 'START_TIMER', when: time });
+}
